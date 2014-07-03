@@ -12,7 +12,6 @@ RUN yum -y install make gcc git autoconf libtool automake python-devel apr-devel
     bzip2 perl-ExtUtils-MakeMaker libevent-devel
 
 RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/usr_local_lib.conf
-RUN ldconfig
 
 RUN git clone https://github.com/ganglia/monitor-core.git ganglia-3.7.0
 RUN tar cvfz /rpmbuild/SOURCES/ganglia-3.7.0.tar.gz ganglia-3.7.0
@@ -64,16 +63,13 @@ RUN make install
 
 WORKDIR /rpmbuild/
 
-#WORKDIR /ganglia-core
-#RUN ./bootstrap
-#RUN ./configure CPPFLAGS=-I/usr/local/include PKG_CONFIG_PATH=/usr/local/lib/pkgconfig --sysconfdir=/etc/ganglia --enable-gmetad --enable-status --with-memcached
-#RUN make 
+RUN yum -y install libart_lgpl-devel libconfuse-devel rrdtool-devel
 
 ADD rrdtool.spec /rpmbuild/SPECS/rrdtool.spec
 ADD ganglia.spec /rpmbuild/SPECS/ganglia.spec
 
-RUN yum -y install libart_lgpl-devel libconfuse-devel rrdtool-devel
-
 RUN rpmbuild -bb /rpmbuild/SPECS/ganglia.spec
+
+VOLUME /ganglia-packages
 
 CMD /bin/bash

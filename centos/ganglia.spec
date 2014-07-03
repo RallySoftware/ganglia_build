@@ -175,7 +175,8 @@ gmetad packages
 %setup -n %{name}-%{version}
 
 %build
-%configure --with-gmetad --enable-status --sysconfdir=%{conf_dir}
+./bootstrap
+%configure CPPFLAGS=-I/usr/local/include PKG_CONFIG_PATH=/usr/local/lib/pkgconfig --sbindir=/usr/sbin --bindir=/usr/bin --sysconfdir=%{conf_dir} --with-gmetad --enable-status --with-memcached
 %ifnarch noarch
 make
 %endif
