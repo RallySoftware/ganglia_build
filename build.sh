@@ -9,7 +9,7 @@ fi
 export DIST=$1
 export DOCKER_HOST=$2
 
-docker build --no-cache -t ganglia_${DIST}_build $DIST/
+docker build -t ganglia_${DIST}_build $DIST/
 
 docker run --name ganglia_${DIST}_build -d -p 8000 ganglia_${DIST}_build python -m SimpleHTTPServer 8000
 
@@ -21,7 +21,7 @@ sleep 5
 if [ $DIST == "centos" ]; then
   cd packages && wget -r -nd http://bld-docker-02:${PORT}/RPMS/x86_64/
 else [ $DIST == "ubuntu" ];
-  cd packages && wget -r -nd http://bld-docker-02:${PORT}/RPMS/x86_64/
+  cd packages && wget -r -nd http://bld-docker-02:${PORT}/
 fi
 
 docker kill ganglia_${DIST}_build

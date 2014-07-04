@@ -18,7 +18,12 @@ This script has the following local requirements for the host running
 
 ## Building
 
-To build, just run `./build.sh` which will do the following:
+To build, run `build.sh` with two arguments:
+- The name of the distro you want to build (ubuntu or centos)
+- The URL to your docker server in a format compatible with the Docker
+  -H parameter (ex. tcp://1.2.3.4:4243)
+
+which will do the following:
 - Build an image using the Dockerfile which will:
   - Install all the dependencies for building ganglia
   - Build all ganglia RPM's using the spec file included in this
@@ -27,3 +32,18 @@ To build, just run `./build.sh` which will do the following:
 - wget the packages out of the running container into the local
   `packages` directory
 - Destroy the container
+
+This will result in the built packages being placed in the `packages`
+directory of this repository.
+
+## Examples
+
+To build CentOS packages:
+```
+./build.sh centos tcp://1.2.3.4:4243
+```
+
+To build Ubuntu packages
+```
+./build.sh ubuntu tcp://1.2.3.4:4243
+```
