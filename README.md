@@ -26,8 +26,7 @@ To build, run `build.sh` with two arguments:
 which will do the following:
 - Build an image using the Dockerfile which will:
   - Install all the dependencies for building ganglia
-  - Build all ganglia RPM's using the spec file included in this
-    repository
+  - Build all ganglia packages for that distribution
 - Start a container using this image running a python http server
 - wget the packages out of the running container into the local
   `packages` directory
